@@ -10,7 +10,7 @@ import { SlidingWindowRateLimiter } from "../../../../features/ratelimit/service
 import redis from "../../../../lib/redis";
 
 const RequestBodySchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
   enteredCode: z.string(),
 });
 
