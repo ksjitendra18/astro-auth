@@ -1,7 +1,8 @@
-import { string, z } from "zod";
+import { email, string, z } from "zod";
 
-export const EmailSchema = string({ required_error: "Email is required" })
-  .email("Please enter a valid email")
-  .trim();
+export const EmailSchema = email({
+  error: (issue) =>
+    issue.input === undefined ? "Email is required" : "Enter a valid email",
+}).trim();
 
 export type EmailSchemaType = z.infer<typeof EmailSchema>;

@@ -47,7 +47,7 @@ export async function POST({
       return Response.json(
         {
           error: "validation_error",
-          message: parsedData.error.format(),
+          mmessage: z.treeifyError(parsedData.error),
         },
         { status: 400 }
       );
