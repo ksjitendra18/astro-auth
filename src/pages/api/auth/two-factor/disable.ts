@@ -1,5 +1,5 @@
 import type { APIContext } from "astro";
-import * as z from "zod";
+import * as z from "@zod/mini";
 import { validateRecoveryCode } from "../../../../features/auth/services/recovery-codes";
 import { getSessionInfo } from "../../../../features/auth/services/session";
 import {

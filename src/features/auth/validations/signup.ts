@@ -1,20 +1,22 @@
-import { email, object, string, z } from "zod";
+import { email, maxLength, minLength, object, regex, string, trim, z } from "@zod/mini";
 
 export const SignupSchema = object({
-  name: string({ error: "Name is required" })
-    .max(256, "Name should be less than 256 characters")
-    .trim(),
+  name: string({ error: "Name is required" }).check(
+    maxLength(256, { error: "Name should be less than 256 characters" }),
+    trim()
+  ),
   email: email({
     error: (issue) =>
       issue.input === undefined ? "Email is required" : "Enter a valid email",
-  }).trim(),
-  password: string({ error: "Password is required" })
-    .min(8, { error: "Password should be more than 8 characters" })
-    .trim()
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/, {
+  }).check(trim()),
+  password: string({ error: "Password is required" }).check(
+    minLength(8, { error: "Password should be more than 8 characters" }),
+    trim(),
+    regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/, {
       error:
         "Password must contain a lowercase letter, uppercase letter, number, and symbol",
-    }),
+    })
+  ),
 });
 
 export type SignupSchemaType = z.infer<typeof SignupSchema>;

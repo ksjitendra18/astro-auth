@@ -3,7 +3,7 @@ import {
   PasswordSchema,
   type PasswordSchemaType,
 } from "../validations/password";
-import { z } from "zod";
+import { z } from "@zod/mini";
 import Loader2 from "lucide-solid/icons/loader-2";
 import Eye from "lucide-solid/icons/eye";
 import EyeOff from "lucide-solid/icons/eye-off";

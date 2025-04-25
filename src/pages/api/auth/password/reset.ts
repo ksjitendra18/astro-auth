@@ -4,7 +4,7 @@ import { udpatePasswordAndDeleteSessions } from "../../../../features/auth/servi
 import { getUserByEmail } from "../../../../features/auth/services/user";
 import redis from "../../../../lib/redis";
 import { PasswordSchema } from "../../../../features/auth/validations/password";
-import * as z from "zod";
+import * as z from "@zod/mini";
 import { sendPasswordResetConfirmationMail } from "../../../../features/email/templates/auth";
 
 const RequestBodySchema = z.object({

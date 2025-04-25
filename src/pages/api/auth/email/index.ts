@@ -7,7 +7,7 @@ import {
 } from "../../../../features/auth/services/user";
 import redis from "../../../../lib/redis";
 import { AUTH_COOKIES } from "../../../../features/auth/constants";
-import z from "zod";
+import z from "@zod/mini";
 
 export async function PATCH({ request, cookies }: APIContext) {
   try {

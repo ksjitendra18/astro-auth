@@ -1,24 +1,28 @@
-import { object, string, z } from "zod";
+import { minLength, object, refine, regex, string, trim, z } from "@zod/mini";
 
 export const UpdatePasswordSchema = object({
-  oldPassword: string({ error: "Old Password is required" })
-    .min(8, "Password should be more than 8 characters")
-    .trim()
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/, {
+  oldPassword: string({ error: "Old Password is required" }).check(
+    minLength(8, { error: "Password should be more than 8 characters" }),
+    trim(),
+    regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/, {
       error:
         "Password must contain a lowercase letter, uppercase letter, number, and symbol",
-    }),
+    })
+  ),
 
-  newPassword: string({ error: "New Password is required" })
-    .min(8, "Password should be more than 8 characters")
-    .trim()
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/, {
+  newPassword: string({ error: "New Password is required" }).check(
+    minLength(8, { error: "Password should be more than 8 characters" }),
+    trim(),
+    regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/, {
       error:
         "Password must contain a lowercase letter, uppercase letter, number, and symbol",
-    }),
-}).refine((data) => data.oldPassword !== data.newPassword, {
-  error: "New password cannot be the same as the old password",
-  path: ["newPassword"],
-});
+    })
+  ),
+}).check(
+  refine((data) => data.oldPassword !== data.newPassword, {
+    error: "New password cannot be the same as the old password",
+    path: ["newPassword"],
+  })
+);
 
 export type UpdatePasswordSchemaType = z.infer<typeof UpdatePasswordSchema>;

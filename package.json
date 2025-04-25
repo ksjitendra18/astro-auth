@@ -19,6 +19,7 @@
     "@libsql/client": "^0.14.0",
     "@node-rs/argon2": "^2.0.2",
     "@tailwindcss/vite": "^4.1.4",
+    "@zod/mini": "4.0.0-beta.20250424T163858",
     "astro": "^5.7.4",
     "bowser": "^2.11.0",
     "drizzle-orm": "^0.38.4",
@@ -30,8 +31,7 @@
     "solid-js": "^1.9.5",
     "tailwindcss": "^4.1.4",
     "typescript": "^5.8.3",
-    "uuid": "^11.1.0",
-    "zod": "4.0.0-beta.20250424T163858"
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",

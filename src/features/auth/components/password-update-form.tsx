@@ -1,5 +1,5 @@
 import { createSignal, Show, type JSX } from "solid-js";
-import * as z from "zod";
+import * as z from "@zod/mini";
 import {
   UpdatePasswordSchema,
   type UpdatePasswordSchemaType,

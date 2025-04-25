@@ -1,14 +1,24 @@
-import { object, string, z } from "zod";
+import {
+  maxLength,
+  minLength,
+  object,
+  regex,
+  string,
+  trim,
+  z,
+} from "@zod/mini";
 
 export const EmailVerificationSchema = object({
-  id: string({ error: "ID is required" }).trim(),
-  code: string({ error: "Code is required" })
-    .min(6, { error: "Enter a valid code" })
-    .max(6, { error: "Enter a valid code" })
-    .trim()
-    .regex(/^\d+$/, {
-      message: "Code should only contain digits",
+  id: string({ error: "ID is required" }).check(trim()),
+
+  code: string({ error: "Code is required" }).check(
+    minLength(6, { error: "Enter a valid code" }),
+    maxLength(6, { error: "Enter a valid code" }),
+    regex(/^\d+$/, {
+      error: "Code should only contain digits",
     }),
+    trim()
+  ),
 });
 
 export type EmailVerificationSchemaType = z.infer<

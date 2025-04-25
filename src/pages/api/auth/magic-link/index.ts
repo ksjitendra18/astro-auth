@@ -3,7 +3,7 @@ import { EmailSchema } from "../../../../features/auth/validations/email";
 import { sendMagicLink } from "../../../../features/email/templates/auth";
 import { AUTH_COOKIES } from "../../../../features/auth/constants";
 import { SlidingWindowRateLimiter } from "../../../../features/ratelimit/services";
-import z from "zod";
+import z from "@zod/mini";
 
 export async function POST({
   request,

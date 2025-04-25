@@ -1,6 +1,6 @@
 import Loader2 from "lucide-solid/icons/loader-2";
 import { Show, createSignal, type JSX } from "solid-js";
-import { z } from "zod";
+import { z } from "@zod/mini";
 import { EmailVerificationSchema } from "../validations/email-verification";
 
 export const EmailVerificationForm = ({ id }: { id: string }) => {
