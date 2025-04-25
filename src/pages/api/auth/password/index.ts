@@ -7,7 +7,7 @@ import {
 import { getSessionInfo } from "../../../../features/auth/services/session";
 import { UpdatePasswordSchema } from "../../../../features/auth/validations/update-password";
 import { AUTH_COOKIES } from "../../../../features/auth/constants";
-import z from "@zod/mini";
+import { treeifyError } from "@zod/mini";
 
 export async function PUT({ request, cookies }: APIContext) {
   try {
@@ -32,7 +32,7 @@ export async function PUT({ request, cookies }: APIContext) {
       return Response.json(
         {
           error: "validation_error",
-          message: z.treeifyError(parsedData.error),
+          message: treeifyError(parsedData.error),
         },
         { status: 400 }
       );

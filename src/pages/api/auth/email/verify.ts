@@ -6,7 +6,7 @@ import {
 import redis from "../../../../lib/redis";
 import { EmailVerificationSchema } from "../../../../features/auth/validations/email-verification";
 import { SlidingWindowRateLimiter } from "../../../../features/ratelimit/services";
-import z from "@zod/mini";
+import { treeifyError } from "@zod/mini";
 
 export async function POST({ clientAddress, request }: APIContext) {
   try {
@@ -39,7 +39,7 @@ export async function POST({ clientAddress, request }: APIContext) {
       return Response.json(
         {
           error: "validation_error",
-          message: z.treeifyError(parsedData.error),
+          message: treeifyError(parsedData.error),
         },
         { status: 400 }
       );

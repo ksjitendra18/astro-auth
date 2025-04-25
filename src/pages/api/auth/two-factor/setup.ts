@@ -12,8 +12,12 @@ import { aesEncrypt, EncryptionPurpose } from "../../../../lib/aes";
 const RequestBodySchema = z.object({
   secretCode: z
     .string({ error: "Secret code is required" })
-    .min(32, { error: "Secret code should be equal to 32 characters" })
-    .max(32, { error: "Secret code should be equal to 32 characters" }),
+    .check(
+      z.minLength(32, {
+        error: "Secret code should be equal to 32 characters",
+      }),
+      z.maxLength(32, { error: "Secret code should be equal to 32 characters" })
+    ),
   enteredCode: z.string({ error: "Entered code is required" }),
 });
 

@@ -4,7 +4,7 @@ import { getUserByEmail } from "../../../../features/auth/services/user";
 import { getUserPassword } from "../../../../features/auth/services/password";
 import { sendPasswordResetMail } from "../../../../features/email/templates/auth";
 import { FixedWindowRateLimiter } from "../../../../features/ratelimit/services";
-import z from "@zod/mini";
+import { treeifyError } from "@zod/mini";
 
 export async function POST({ request, url, clientAddress }: APIContext) {
   try {
@@ -33,7 +33,7 @@ export async function POST({ request, url, clientAddress }: APIContext) {
       return Response.json(
         {
           error: "validation_error",
-          message: z.treeifyError(parsedData.error),
+          message: treeifyError(parsedData.error),
         },
         { status: 400 }
       );

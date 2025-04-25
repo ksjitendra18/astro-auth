@@ -8,7 +8,7 @@ import {
 import { SignupSchema } from "../../../features/auth/validations/signup";
 import { sendVerificationMail } from "../../../features/email/templates/auth";
 import { TokenBucketRateLimiter } from "../../../features/ratelimit/services";
-import z from "@zod/mini";
+import { treeifyError } from "@zod/mini";
 
 export async function POST({ request, clientAddress }: APIContext) {
   try {
@@ -39,7 +39,7 @@ export async function POST({ request, clientAddress }: APIContext) {
       return Response.json(
         {
           error: "validation_error",
-          message: z.treeifyError(parsedData.error),
+          message: treeifyError(parsedData.error),
         },
         { status: 400 }
       );
