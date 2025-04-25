@@ -1,0 +1,30 @@
+---
+import { RecoveryCodeVerificationForm } from "../features/auth/components/recovery-code-verification-form";
+import { AUTH_COOKIES } from "../features/auth/constants";
+import MainLayout from "../layout/main-layout.astro";
+import redis from "../lib/redis";
+
+const isUserLoggedIn = !!Astro.locals.userId;
+if (isUserLoggedIn) {
+  return Astro.redirect("/dashboard");
+}
+
+const twoFaSess = Astro.cookies.get(AUTH_COOKIES.TWO_FA_AUTH)?.value;
+
+if (!twoFaSess) {
+  return Astro.redirect("/login");
+}
+
+const userId = await redis.get(`2fa_auth:${twoFaSess}`);
+
+if (!userId) {
+  return Astro.redirect("/login");
+}
+---
+
+<MainLayout
+  title="Recovery Code Verification"
+  description="Recovery Code Verification"
+>
+  <RecoveryCodeVerificationForm client:load />
+</MainLayout>

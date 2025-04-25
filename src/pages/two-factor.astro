@@ -1,0 +1,42 @@
+---
+import { authenticator } from "otplib";
+import qrcode from "qrcode";
+import { TwoFactorSetupForm } from "../features/auth/components/two-factor-setup-form";
+import { getUserById } from "../features/auth/services/user";
+import MainLayout from "../layout/main-layout.astro";
+
+const userId = Astro.locals?.userId;
+
+if (!userId) {
+  return Astro.redirect("/login?redirect=/two-factor");
+}
+
+const userInfo = await getUserById(userId);
+
+if (!userInfo) {
+  return Astro.redirect("/login?redirect=/two-factor");
+}
+
+const secret = authenticator.generateSecret(20);
+
+const otpAuthUrl = authenticator.keyuri(userInfo.email, "Astro Auth", secret);
+
+const imageUrl = await qrcode.toDataURL(otpAuthUrl);
+---
+
+<MainLayout title="Two Factor Setup" description="Two Factor Setup">
+  <h1 class="my-10 text-3xl font-bold text-center">Two Factor Setup</h1>
+
+  {
+    userInfo.twoFactorEnabled && (
+      <div class="flex items-center justify-center">
+        <p class="bg-emerald-700 text-white rounded-md px-2 py-1">
+          You have Two Factor enabled. You can reconfigure it by submitting the
+          form.
+        </p>
+      </div>
+    )
+  }
+
+  <TwoFactorSetupForm qrCode={imageUrl} secretCode={secret} client:load />
+</MainLayout>
